@@ -37,6 +37,12 @@ module.exports = {
     'keyword-spacing': ['error', { 'before': true, 'after': true }],
     'space-before-blocks': ['error', 'always'],
     'linebreak-style': 'off',
+    'padded-blocks': ['error', 'never'],
+    'padding-line-between-statements': [
+      'error',
+      { 'blankLine': 'always', 'prev': ['block', 'block-like'], 'next': '*' }
+    ],
+    'no-multiple-empty-lines': ['error', { 'max': 1 }],
     'quotes': [
       'error',
       'single'

@@ -30,8 +30,15 @@ const createUser = async (req: Request, res: Response) => {
 
 const deleteUser = async (req: Request, res: Response) => {
   const { username } = req.params;
-  await User.findOneAndDelete({ username });
-  res.status(StatusCodes.NO_CONTENT);
+  
+  const result = await User.findOneAndDelete({ username });
+  
+  if (!result) {
+    res.status(StatusCodes.NOT_FOUND).send({ message: 'User not found' });
+    return;
+  }
+  
+  res.status(StatusCodes.NO_CONTENT).end();
 };
 
 const patchUser = async (req: Request, res: Response) => {
@@ -48,11 +55,11 @@ const patchUser = async (req: Request, res: Response) => {
     });
     return;
   }
-  
+
   if (email) {
     user.email = email;
   }
-  
+
   if (password) {
     user.password = password;
   }
@@ -61,7 +68,6 @@ const patchUser = async (req: Request, res: Response) => {
   
   res.status(StatusCodes.OK).send(user);
 };
-
 
 export default {
   getAllUsers,

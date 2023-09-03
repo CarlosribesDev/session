@@ -10,6 +10,7 @@ router.route('/')
 
 router.route('/:username')
   .get(UserController.getUserByUsername)
+  .patch(UserController.patchUser)
   .delete(UserController.deleteUser);
 
 export default router;

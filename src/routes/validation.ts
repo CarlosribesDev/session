@@ -20,6 +20,7 @@ const validationErrorHandler = (req: Request, res: Response, next: NextFunction)
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
+
   next();
 };
 
