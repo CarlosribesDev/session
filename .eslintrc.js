@@ -35,6 +35,8 @@ module.exports = {
     ],
     '@typescript-eslint/no-unused-vars': ['error', { 'args': 'none' }],
     'keyword-spacing': ['error', { 'before': true, 'after': true }],
+    'arrow-spacing': ['error', { 'before': true, 'after': true }],
+    'comma-spacing': ['error', { 'before': false, 'after': true }],
     'space-before-blocks': ['error', 'always'],
     'linebreak-style': 'off',
     'padded-blocks': ['error', 'never'],

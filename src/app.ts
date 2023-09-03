@@ -1,17 +1,16 @@
 import express from 'express';
 import UserRouter from './routes/user';
 import './db/mogoConnection';
-import { Request, Response, NextFunction } from 'express';
+import { errorMiddelWare, logMiddelWare } from './middelware';
 
 const app = express();
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction): void =>{
-  console.error(err.stack);
-  res.status(500).send('¡Algo salió mal!');
-});
-
 app.use(express.json());
-app.use('/api/user',UserRouter);
+app.use(logMiddelWare);
+
+app.use('/api/user', UserRouter);
+
+app.use(errorMiddelWare);
 
 export default app;
 

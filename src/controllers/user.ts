@@ -1,13 +1,14 @@
 import User from '../model/user';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import asyncHandler from 'express-async-handler';
 
-const getAllUsers = async (req: Request, res: Response) => {
+const getAllUsers = asyncHandler(async (req: Request, res: Response) => {
   const users = await User.find();
   res.status(StatusCodes.OK).send(users);
-};
+});
 
-const getUserByUsername = async (req: Request, res: Response) => {
+const getUserByUsername = asyncHandler(async (req: Request, res: Response) => {
   const { username } = req.params;
   const user = await User.find({ username });
 
@@ -19,16 +20,16 @@ const getUserByUsername = async (req: Request, res: Response) => {
   }
 
   res.status(StatusCodes.OK).send(user[0]);
-};
+});
 
-const createUser = async (req: Request, res: Response) => {
+const createUser = asyncHandler(async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
   const newUser = new User({ username, email, password });
   await newUser.save();
   res.status(StatusCodes.CREATED).send(newUser);
-};
+});
 
-const deleteUser = async (req: Request, res: Response) => {
+const deleteUser = asyncHandler(async (req: Request, res: Response) => {
   const { username } = req.params;
   
   const result = await User.findOneAndDelete({ username });
@@ -39,16 +40,14 @@ const deleteUser = async (req: Request, res: Response) => {
   }
   
   res.status(StatusCodes.NO_CONTENT).end();
-};
+});
 
-const patchUser = async (req: Request, res: Response) => {
+const patchUser = asyncHandler(async (req: Request, res: Response) => {
   const { username } = req.params;
   const { email, password } = req.body;
   
-  // Busca al usuario por username.
   const user = await User.findOne({ username });
     
-  // Si el usuario no existe, devuelve un error 404 (Not Found).
   if (!user) {
     res.status(StatusCodes.NOT_FOUND).send({
       message: 'User not found'
@@ -67,7 +66,7 @@ const patchUser = async (req: Request, res: Response) => {
   await user.save();
   
   res.status(StatusCodes.OK).send(user);
-};
+});
 
 export default {
   getAllUsers,
@@ -76,3 +75,4 @@ export default {
   getUserByUsername,
   patchUser
 };
+

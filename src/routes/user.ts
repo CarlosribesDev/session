@@ -6,7 +6,7 @@ const router = Router();
 
 router.route('/')
   .get(UserController.getAllUsers)
-  .post(userValidation ,validationErrorHandler, UserController.createUser);
+  .post(userValidation, validationErrorHandler, UserController.createUser);
 
 router.route('/:username')
   .get(UserController.getUserByUsername)
