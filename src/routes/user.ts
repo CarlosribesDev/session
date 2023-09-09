@@ -1,12 +1,14 @@
 import { Router } from 'express';
 import UserController from '../controllers/user';
-import { userValidation, validationErrorHandler } from './validation';
+import { newUserValidation, userTypeValidation } from '../validation/userValidation';
 
 const router = Router();
 
+router.use(userTypeValidation);
+
 router.route('/')
   .get(UserController.getAllUsers)
-  .post(userValidation, validationErrorHandler, UserController.createUser);
+  .post(newUserValidation, UserController.createUser);
 
 router.route('/:username')
   .get(UserController.getUserByUsername)
@@ -14,4 +16,3 @@ router.route('/:username')
   .delete(UserController.deleteUser);
 
 export default router;
-

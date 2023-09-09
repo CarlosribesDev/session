@@ -2,6 +2,7 @@ import User from '../model/user';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import asyncHandler from 'express-async-handler';
+import bcrypt from 'bcrypt';
 
 const getAllUsers = asyncHandler(async (req: Request, res: Response) => {
   const users = await User.find();
@@ -24,7 +25,8 @@ const getUserByUsername = asyncHandler(async (req: Request, res: Response) => {
 
 const createUser = asyncHandler(async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
-  const newUser = new User({ username, email, password });
+  const passwordHash = await bcrypt.hash(password, 10);
+  const newUser = new User({ username, email, passwordHash });
   await newUser.save();
   res.status(StatusCodes.CREATED).send(newUser);
 });
@@ -60,7 +62,8 @@ const patchUser = asyncHandler(async (req: Request, res: Response) => {
   }
 
   if (password) {
-    user.password = password;
+    const passwordHash = await bcrypt.hash(password, 10);
+    user.password = passwordHash;
   }
   
   await user.save();
