@@ -1,5 +1,5 @@
 import errorMiddelWare from './errorMiddelWare';
 import logMiddelWare from './logMiddelWare';
-import validationErrorMidelWare from './validationErrorMidelWare';
+import validationErrorMiddelWare from './validationErrorMiddelWare';
 
-export { errorMiddelWare, logMiddelWare, validationErrorMidelWare };
+export { errorMiddelWare, logMiddelWare, validationErrorMiddelWare };

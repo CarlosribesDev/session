@@ -1,15 +1,16 @@
 import express from 'express';
-import UserRouter from './routes/user';
+import { UserRouter, AuthRouter } from './routes';
 import './db/mogoConnection';
-import { errorMiddelWare, logMiddelWare, validationErrorMidelWare } from './middelware';
+import { errorMiddelWare, logMiddelWare, validationErrorMiddelWare } from './middelware';
 
 const app = express();
 
 app.use(express.json());
 app.use(logMiddelWare);
-app.use(validationErrorMidelWare);
+app.use(validationErrorMiddelWare);
 
 app.use('/api/user', UserRouter);
+app.use('/api/auth', AuthRouter);
 
 app.use(errorMiddelWare);
 
